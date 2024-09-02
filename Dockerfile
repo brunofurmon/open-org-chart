@@ -1,17 +1,17 @@
-FROM node:20.9-slim as base
-ENV APPDIR /usr/open-org-chart
+FROM node:20.9-slim AS base
+ENV APPDIR=/usr/open-org-chart
 
 WORKDIR $APPDIR
 
 RUN apt-get update && rm -rf /var/cache/apt/* /tmp/* /var/tmp/*
 
-FROM base as development
-ENV NODE_ENV development
-ENV YARN_CACHE_FOLDER /usr/open-org-chart/.caches/yarn
+FROM base AS development
+ENV NODE_ENV=development
+ENV YARN_CACHE_FOLDER=/usr/open-org-chart/.caches/yarn
 
 ENTRYPOINT ["./development_entrypoint.sh"]
 
-FROM base as production
+FROM base AS production
 EXPOSE $SERVER_PORT
 
 ENV NODE_ENV=production \
