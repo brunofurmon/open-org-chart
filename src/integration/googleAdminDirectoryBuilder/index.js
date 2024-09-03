@@ -1,5 +1,7 @@
 const { google } = require("googleapis");
 
+// Returns a User model from Google Admin Directory API
+// returns { name, email, photoUrl, managedByEmail, title, area }
 const toDomainModel = (user) => {
   const name = user.name.fullName;
   const email = user.primaryEmail;
@@ -17,6 +19,8 @@ const toDomainModel = (user) => {
   return { name, email, photoUrl, managedByEmail, title, area };
 };
 
+// Module must implement
+// listUsers: () => Promise<User[]>
 const init = ({ logger }) => {
   let authClient = null;
 

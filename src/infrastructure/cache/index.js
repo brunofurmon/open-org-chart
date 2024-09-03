@@ -24,12 +24,13 @@ const init = (cacheEngine) => () => {
 
   const cachedResult = async (cb, cacheKey, ttl) => {
     const cachedResult = await get(cacheKey);
+
     if (cachedResult) {
       return cachedResult;
     }
 
     const result = await cb();
-    
+
     await set(cacheKey, result, ttl);
 
     return result;
@@ -39,7 +40,7 @@ const init = (cacheEngine) => () => {
     return await cache.isReady();
   };
 
-  return {get, set, cachedResult, isReady};
+  return { get, set, cachedResult, isReady };
 };
 
 module.exports = init;

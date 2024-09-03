@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const userServiceBuilder = require("../../../../domain/user/service");
 
-function init({ cache, adminDirectory }, renderFunction) {
+function init({ cache, usersStore }, renderFunction) {
   router.get(
     "/",
     // Data fetching
@@ -11,8 +11,8 @@ function init({ cache, adminDirectory }, renderFunction) {
 
       const fetchUsers = () =>
         cache.cachedResult(
-          adminDirectory.listUsers,
-          "adminUsers",
+          usersStore.listUsers,
+          "users",
           parseInt(process.env.ADMIN_USERS_TTL_CACHE_S, 10) || 300
         );
 

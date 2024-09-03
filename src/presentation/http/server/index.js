@@ -15,13 +15,13 @@ const init = (services) => {
 
   const nextWrappedHttpServer = async () => {
     const devMode = process.env.NODE_ENV !== 'production';
-  
-    const app = nextApp({ ...nextConfig, dev: devMode });    
+
+    const app = nextApp({ ...nextConfig, dev: devMode });
     const appHandle = app.getRequestHandler();
     await app.prepare();
 
     const server = express();
-  
+
     // Security enforcement
     // app.disable('x-powered-by');
     // app.use(helmet());
@@ -29,16 +29,17 @@ const init = (services) => {
     // app.use(bodyParser.json({ limit: '5mb' }));
     // app.use(compress);
     // app.use(cors());
-  
+
     // Public assets
     server.use(express.static('public'));
 
     // Routing
-    server.use('/', healtcheckRouterBuilder.init({ cacheIsReady: services.cache.isReady}));
+    server.use('/', healtcheckRouterBuilder.init({ cacheIsReady: services.cache.isReady }));
     const renderFuncion = render(app);
+    console.log(renderFuncion);
     server.use('/', homeRoutesBuilder.init(services, renderFuncion));
     server.get('/_next/*', appHandle);
-  
+
     return server;
   };
 
