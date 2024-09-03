@@ -14,9 +14,9 @@ ENTRYPOINT ["./development_entrypoint.sh"]
 FROM base AS production
 EXPOSE $SERVER_PORT
 
-ENV NODE_ENV=production \
-    NEXT_TELEMETRY_DISABLED=1 \
-    TINI_VERSION=v0.19.0
+ENV NODE_ENV production \
+    NEXT_TELEMETRY_DISABLED 1 \
+    TINI_VERSION v0.19.0
 
 RUN addgroup --gid 1001 --system open-org-chart && \
     adduser --uid 1001 --system --gid 1001 open-org-chart
