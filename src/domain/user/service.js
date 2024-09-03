@@ -43,7 +43,6 @@ const init = ({ fetchUsers }) => {
       user.id = user.email.trim().toLowerCase();
       user.parentId = user.managedByEmail.trim().toLowerCase();
     }
-
     if (!debugMode) {
       users = users.filter(
         (user) =>

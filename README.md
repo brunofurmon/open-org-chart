@@ -25,6 +25,7 @@ The application can be configured by setting environment variables. The default 
 | `CACHE_ENGINE`            | Cache engine of choice. Can be 'memory' or 'redis'                                                              | `memory`             |
 | `REDIS_URL`               | Id `CACHE_ENGINE` is set to "redis" then the complete URL with protocol, host and port                          | `redis://redis:6379` |
 | `ADMIN_USERS_TTL_CACHE_S` | Expiration time for users cache entry to be valid (when using memory, cache is perpetual until app termination) | `3600`               |
+| `USER_BACKEND_MODE`       | User backend selection. Can be "csv" or "googleadmin"                                                           | `csv`                |
 
 ## Running
 
