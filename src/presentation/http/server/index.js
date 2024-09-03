@@ -35,7 +35,7 @@ const init = (services) => {
 
     // Routing
     server.use('/', healtcheckRouterBuilder.init({ cacheIsReady: services.cache.isReady }));
-    const renderFuncion = render(app);
+    const renderFuncion = render(app, { logger: services.logger });
     console.log(renderFuncion);
     server.use('/', homeRoutesBuilder.init(services, renderFuncion));
     server.get('/_next/*', appHandle);

@@ -1,9 +1,8 @@
 const httpStatus = require('http-status');
 
-const renderBuilder = (nextApp) => async (req, res) => {
+const renderBuilder = (nextApp, { logger }) => async (req, res) => {
   try {
     const html = await nextApp.renderToHTML(req, res, req.path, req.query);
-    console.log(html);
     if (res.statusCode >= httpStatus.BAD_REQUEST) {
       res.send(html);
 
@@ -12,6 +11,7 @@ const renderBuilder = (nextApp) => async (req, res) => {
 
     res.send(html);
   } catch (err) {
+    logger.error(err);
     nextApp.renderError(err, req, res, req.path, req.query);
   }
 };
