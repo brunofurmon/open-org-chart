@@ -1,4 +1,6 @@
 {
-  "ignore": ["test/**", "build"],
-  "ext": "js,json"
+  "watch": ["src"],
+  "ext": "js",
+  "ignore": ["src/**/*.test.js"],
+  "exec": "node src/application/index.js"
 }
