@@ -14,7 +14,7 @@ welcome:
 	@echo "Welcome to ${CONTAINER_NAME}"
 
 setup: welcome build-docker-image ## Install dependencies
-ifeq ("$(wildcard ./env)","")
+ifeq ("$(wildcard ./.env)","")
 	@cp .env.default .env
 endif
 
