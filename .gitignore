@@ -134,4 +134,3 @@ build/
 
 *.env*
 *credentials*
-yarn.lock
