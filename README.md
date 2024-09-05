@@ -63,9 +63,13 @@ Renders the organogram page
 
 - _debug_ (default=false): If true, will render an intermediate node containing every account that has no original parent (manager) in the directory
 
-### GET /healtcheck
+### GET /api/liveness
 
 Returns a liveness check if the application is running.
+
+### GET /api/readiness
+
+Returns a readiness check if cache is running and app is ready to deliver content.
 
 ## Improvements (TODO):
 
