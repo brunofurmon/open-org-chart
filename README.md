@@ -19,7 +19,7 @@ The application can be configured by setting environment variables. The default 
 | `LOG_LEVEL`               | The log level of the application. Examples: `info`, `debug`, `error`, `warn`                                    | `info`               |
 | `DEBUG`                   | All log lines that match this expression will be thrown in STDOUT (Console).                                    | `*`                  |
 | `ROOT_NODE_ID`            | The id (email) of the root node                                                                                 | `email@domain.com`   |
-| `WORKSPACE_CUSTOMER_ID`   | Your Google Workspace id                                                                                        | `A0123b4c5`          |
+| `WORKSPACE_CUSTOMER_ID`   | Your Google Workspace id ([how to get it](https://support.google.com/a/answer/10070793))                        | `A0123b4c5`          |
 | `WORKSPACE_DOMAIN`        | The domain used to filter users from a directory                                                                | `domain.com`         |
 | `AUTH_CLIENT_SUBJECT`     | An account with permissions to list users from the directory                                                    | `admin@domain.com`   |
 | `CACHE_ENGINE`            | Cache engine of choice. Can be 'memory' or 'redis'                                                              | `memory`             |
