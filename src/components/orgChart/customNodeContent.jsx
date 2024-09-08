@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const CustomNodeContent = (props) => {
   return (
     <>
@@ -19,14 +21,15 @@ const CustomNodeContent = (props) => {
             border: "1px solid lightgray",
           }}
         >
-          <img
+          <Image
+            alt="profile picture"
             src={props.data.photoUrl}
+            width={60}
+            height={60}
             style={{
               marginTop: "-30px",
               marginLeft: props.width / 2 - 30 + "px",
               borderRadius: "100px",
-              width: "60px",
-              height: "60px",
             }}
           />
 
@@ -56,7 +59,12 @@ const CustomNodeContent = (props) => {
               {props.data.name + " <" + props.data.email + ">"}{" "}
             </div>
             <div
-              style={{ color: "#404040", fontSize: "16px", marginTop: "4px", textTransform: "uppercase" }}
+              style={{
+                color: "#404040",
+                fontSize: "16px",
+                marginTop: "4px",
+                textTransform: "uppercase",
+              }}
             >
               {" "}
               {props.data.title}{" "}

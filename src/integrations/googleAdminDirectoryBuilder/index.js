@@ -1,4 +1,4 @@
-const { google } = require("googleapis");
+import { google } from "googleapis";
 
 // Returns a User model from Google Admin Directory API
 // returns { name, email, photoUrl, managedByEmail, title, area }
@@ -86,4 +86,4 @@ const init = ({ logger }) => {
   return { listUsers };
 };
 
-module.exports = init;
+export default init;

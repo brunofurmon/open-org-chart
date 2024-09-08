@@ -9,7 +9,17 @@ const nextConfig = {
   reactStrictMode: true,
   generateBuildId: () => Promise.resolve(version),
   distDir: 'build/_next',
-  optimizeFonts: false
+  optimizeFonts: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placecats.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 module.exports = withBundleAnalyzer(nextConfig);

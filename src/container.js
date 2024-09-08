@@ -1,21 +1,18 @@
-const awilix = require("awilix");
+import { createContainer, asFunction } from "awilix";
+import loggerBuilder from "@/infrastructure/logging";
+import cacheBuilder from "@/infrastructure/cache";
+import googleadminDirectoryBuilder from "@/integrations/googleAdminDirectoryBuilder";
+import csvBuilder from "@/integrations/csv";
 
-const httpServerBuilder = require("./presentation/http/server");
-const loggerBuilder = require("./infrastructure/logging");
-const adminDirectoryBuilder = require("./integration/googleAdminDirectoryBuilder");
-const cacheBuilder = require("./infrastructure/cache");
-const csvBuilder = require("./integration/csv");
+const container = createContainer();
 
-const container = awilix.createContainer();
-const cacheEngine = process.env.CACHE_ENGINE || "memory";
-const userBackendMode = process.env.USER_BACKEND_MODE || "csv";
+const cacheEngine = process.env.CACHE_ENGINE;
 
 container.register({
-  httpServer: awilix.asFunction(httpServerBuilder),
-  logger: awilix.asFunction(loggerBuilder),
-  usersStore: awilix.asFunction(
-    userBackendMode === 'csv' ? csvBuilder : adminDirectoryBuilder),
-  cache: awilix.asFunction(cacheBuilder(cacheEngine)),
+  logger: asFunction(loggerBuilder),
+  googleadminUserStore: asFunction(googleadminDirectoryBuilder),
+  csvUserStore: asFunction(csvBuilder),
+  cache: asFunction(cacheBuilder(cacheEngine)),
 });
 
-module.exports = container;
+export default container;

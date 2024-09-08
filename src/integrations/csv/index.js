@@ -1,5 +1,5 @@
-const fs = require("fs");
-const csv = require("csv-parser");
+import fs from "fs";
+import csv from "csv-parser";
 
 // Returns a User model from a CSV file
 // returns { name, email, photoUrl, managedByEmail, title, area }
@@ -43,4 +43,4 @@ const init = ({ logger }) => {
   return { listUsers };
 };
 
-module.exports = init;
+export default init;

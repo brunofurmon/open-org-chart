@@ -1,38 +1,45 @@
-import React, { useRef, useEffect, useState } from "react";
+"use client";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import ReactDOMServer from "react-dom/server";
 import CustomNodeContent from "./customNodeContent";
 
-const OrganizationalChart = (props) => {
+const OrganizationalChart = ({ users }) => {
   const d3Container = useRef(null);
   const [chart, setChart] = useState(null);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
 
   // FIXME: Move to input component
-  const onChangeUser = (e) => {
-    setTimeout(() => {
-      const user = e.target.value;
-      const filteredUsers = props.data
-        .filter(
-          (u) =>
-            u.name.toLowerCase().includes(user.toLowerCase()) ||
-            u.email.toLowerCase().includes(user.toLowerCase())
-        )
-        .slice(0, 5);
-      setSuggestedUsers(filteredUsers);
-    }, 500);
-  };
+  const onChangeUser = useCallback(
+    (e) => {
+      setTimeout(() => {
+        const user = e.target.value;
+        const filteredUsers = users
+          .filter(
+            (u) =>
+              u.name.toLowerCase().includes(user.toLowerCase()) ||
+              u.email.toLowerCase().includes(user.toLowerCase())
+          )
+          .slice(0, 5);
+        setSuggestedUsers(filteredUsers);
+      }, 500);
+    },
+    [setSuggestedUsers, users]
+  );
 
   // FIXME: Move to input component
-  const onBlurUser = () => {
+  const onBlurUser = useCallback(() => {
     setTimeout(() => {
       setSuggestedUsers([]);
     }, 100);
-  };
+  }, [setSuggestedUsers]);
 
-  const setCenteredUser = (userId) => {
-    chart.setCentered(userId).render();
-    setChart(chart);
-  };
+  const setCenteredUser = useCallback(
+    (userId) => {
+      chart.setCentered(userId).render();
+      setChart(chart);
+    },
+    [chart, setChart]
+  );
 
   // Effect for initial render
   useEffect(() => {
@@ -41,10 +48,10 @@ const OrganizationalChart = (props) => {
       /** @type OrgChart */
       const chart = new mod.OrgChart();
       chart.layout("top");
-      if (props.data && d3Container.current) {
+      if (users && d3Container.current) {
         chart
           .container(d3Container.current)
-          .data(props.data)
+          .data(users)
           .nodeWidth((d) => 300)
           .nodeHeight((d) => 175)
           .compactMarginBetween((d) => 80)
@@ -57,7 +64,7 @@ const OrganizationalChart = (props) => {
       }
       setChart(chart);
     });
-  }, [props, props.data]);
+  }, [users]);
 
   return (
     <>
@@ -69,10 +76,12 @@ const OrganizationalChart = (props) => {
           onBlur={onBlurUser}
         />
         {suggestedUsers.length > 0 && (
-          <div style={{ 
-            borderWidth: "2px",
-            backgroundColor: "white",
-           }}>
+          <div
+            style={{
+              borderWidth: "2px",
+              backgroundColor: "white",
+            }}
+          >
             {suggestedUsers.map((u) => (
               <div key={u.id} onClick={() => setCenteredUser(u.id)}>
                 {u.name}
@@ -81,11 +90,7 @@ const OrganizationalChart = (props) => {
           </div>
         )}
       </div>
-      <div 
-        style={{ }}
-        className="org-chart" 
-        ref={d3Container}
-      />
+      <div style={{}} className="org-chart" ref={d3Container} />
     </>
   );
 };

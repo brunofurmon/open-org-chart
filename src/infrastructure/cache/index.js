@@ -43,4 +43,4 @@ const init = (cacheEngine) => () => {
   return { get, set, cachedResult, isReady };
 };
 
-module.exports = init;
+export default init;

@@ -31,23 +31,28 @@ The application can be configured by setting environment variables. The default 
 
 ### Development:
 
+First of all, install dependencies through your favorite package mananger (yarn is the default)
+
+```sh
+yarn
+```
+
 The command above will run a server on port 3000 and map port 9229 for debug attaching
 
 ```sh
-make debug
+yarn dev
 ```
 
-This repo comes with [vscode launch file](.vscode/launch.json). `make debug` and hit F5 to Attach to node.
+This repo comes with [vscode launch file](.vscode/launch.json). Chose a debugging profile and hit F5 to start inspect server or attach through browser.
 
 ### Production:
 
-Change the `DOCKER_STAGE ?= development` from "development" to "production" and then run the image build command
+The present Dockerfile will generate a production optimized build and serve it through 0.0.0.0:3000 for
+the use to be able to reach it through the host machine against the application container.
 
 ```sh
-make build-docker-image
+make setup
 ```
-
-This should create a `build` folder where next will serve the pages.
 
 And run with
 
@@ -63,9 +68,13 @@ Renders the organogram page
 
 - _debug_ (default=false): If true, will render an intermediate node containing every account that has no original parent (manager) in the directory
 
-### GET /healtcheck
+### GET /api/liveness
 
 Returns a liveness check if the application is running.
+
+### GET /api/readiness
+
+Returns a readiness check if cache is running and app is ready to deliver content.
 
 ## Improvements (TODO):
 
