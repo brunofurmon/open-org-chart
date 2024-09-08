@@ -1,6 +1,6 @@
 # open-org-chart
 
-An open-source Org Chart made with NextJS
+An open-source Org Chart made with [NextJS](https://nextjs.org/) and [d3-org-chart](https://www.npmjs.com/package/d3-org-chart)
 
 ## Installation
 
