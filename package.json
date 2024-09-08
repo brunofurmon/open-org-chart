@@ -11,8 +11,7 @@
     "start": "next start",
     "build": "next build",
     "build-analyzer": "ANALYZE=true next build",
-    "postversion": "git push --follow-tags",
-    "nextdev": "next dev"
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "eslint": "^7.32.0 || ^8.2.0",
