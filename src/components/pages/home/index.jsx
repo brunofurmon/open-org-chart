@@ -1,12 +1,19 @@
 "use client";
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import ReactDOMServer from "react-dom/server";
-import CustomNodeContent from "./customNodeContent";
+import CustomNodeContent from "@/components/orgChart/customNodeContent";
+import { useTranslation } from "@/presentation/i18n/client";
 
-const OrganizationalChart = ({ users }) => {
+const Home = ({ users }) => {
   const d3Container = useRef(null);
   const [chart, setChart] = useState(null);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
+  let { t, i18n } = useTranslation("orgchart");
+
+  const setLanguage = useCallback(
+    (lng) => i18n.changeLanguage(lng)[i18n],
+    [i18n]
+  );
 
   // FIXME: Move to input component
   const onChangeUser = useCallback(
@@ -52,26 +59,24 @@ const OrganizationalChart = ({ users }) => {
         chart
           .container(d3Container.current)
           .data(users)
-          .nodeWidth((d) => 300)
-          .nodeHeight((d) => 175)
-          .compactMarginBetween((d) => 80)
-          .nodeContent((d) => {
-            return ReactDOMServer.renderToStaticMarkup(
-              <CustomNodeContent {...d} />
-            );
-          })
+          .nodeWidth((_) => 300)
+          .nodeHeight((_) => 175)
+          .compactMarginBetween((_) => 80)
+          .nodeContent((d) =>
+            ReactDOMServer.renderToStaticMarkup(<CustomNodeContent {...d} />)
+          )
           .render();
       }
       setChart(chart);
     });
-  }, [users]);
+  }, [users, d3Container, i18n.language]);
 
   return (
     <>
       <div style={{ position: "absolute" }}>
         <input
           type="text"
-          placeholder="Buscar nome ou email"
+          placeholder={t("searchUserTemplate")}
           onKeyDown={onChangeUser}
           onBlur={onBlurUser}
         />
@@ -90,9 +95,15 @@ const OrganizationalChart = ({ users }) => {
           </div>
         )}
       </div>
+
       <div style={{}} className="org-chart" ref={d3Container} />
+
+      <div style={{ position: "absolute", top: 0, right: 0 }}>
+        <button onClick={() => setLanguage("en")}>EN</button>
+        <button onClick={() => setLanguage("pt")}>PT</button>
+      </div>
     </>
   );
 };
 
-export default OrganizationalChart;
+export default Home;

@@ -1,0 +1,6 @@
+{
+  "manages": "Gerencia",
+  "supervises": "Supervisiona",
+  "rendering": "Rendering chart...",
+  "searchUserTemplate": "Buscar nome ou email"
+}
