@@ -3,42 +3,14 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import ReactDOMServer from "react-dom/server";
 import CustomNodeContent from "@/components/orgChart/customNodeContent";
 import { useTranslation } from "@/presentation/i18n/client";
+import UserSearchInput from "@/components/userSearchInput";
 
 const Home = ({ users }) => {
   const d3Container = useRef(null);
   const [chart, setChart] = useState(null);
-  const [suggestedUsers, setSuggestedUsers] = useState([]);
-  let { t, i18n } = useTranslation("orgchart");
+  let { i18n } = useTranslation("orgchart");
 
-  const setLanguage = useCallback(
-    (lng) => i18n.changeLanguage(lng)[i18n],
-    [i18n]
-  );
-
-  // FIXME: Move to input component
-  const onChangeUser = useCallback(
-    (e) => {
-      setTimeout(() => {
-        const user = e.target.value;
-        const filteredUsers = users
-          .filter(
-            (u) =>
-              u.name.toLowerCase().includes(user.toLowerCase()) ||
-              u.email.toLowerCase().includes(user.toLowerCase())
-          )
-          .slice(0, 5);
-        setSuggestedUsers(filteredUsers);
-      }, 500);
-    },
-    [setSuggestedUsers, users]
-  );
-
-  // FIXME: Move to input component
-  const onBlurUser = useCallback(() => {
-    setTimeout(() => {
-      setSuggestedUsers([]);
-    }, 100);
-  }, [setSuggestedUsers]);
+  const setLanguage = useCallback((lng) => i18n.changeLanguage(lng), [i18n]);
 
   const setCenteredUser = useCallback(
     (userId) => {
@@ -74,26 +46,7 @@ const Home = ({ users }) => {
   return (
     <>
       <div style={{ position: "absolute" }}>
-        <input
-          type="text"
-          placeholder={t("searchUserTemplate")}
-          onKeyDown={onChangeUser}
-          onBlur={onBlurUser}
-        />
-        {suggestedUsers.length > 0 && (
-          <div
-            style={{
-              borderWidth: "2px",
-              backgroundColor: "white",
-            }}
-          >
-            {suggestedUsers.map((u) => (
-              <div key={u.id} onClick={() => setCenteredUser(u.id)}>
-                {u.name}
-              </div>
-            ))}
-          </div>
-        )}
+        <UserSearchInput users={users} onUserSelected={setCenteredUser} />
       </div>
 
       <div style={{}} className="org-chart" ref={d3Container} />
