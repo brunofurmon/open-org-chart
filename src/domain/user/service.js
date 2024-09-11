@@ -1,11 +1,22 @@
 import container from '@/src/container';
 
 const userBackendMode = process.env.USER_BACKEND_MODE || "csv";
+const backendModes = ["csv", "googleadmin", "googlesheets"];
+if (!backendModes.includes(userBackendMode)) {
+  throw new Error(
+    `User backend mode ${userBackendMode} not supported. Supported user backend modes: ${backendModes.join(
+      ", "
+    )}`
+  );
+}
 
-const usersStore =
-  userBackendMode === 'csv'
-    ? container.resolve('csvUserStore')
-    : container.resolve('googleadminUserStore');
+const backendModeResolver = {
+  'csv': () => container.resolve('csvUserStore'),
+  'googleadmin': () => container.resolve('googleadminUserStore'),
+  'googlesheets': () => container.resolve('googleSpreadsheetUserStore'),
+}
+const usersStore = backendModeResolver[userBackendMode]();
+
 const { cachedResult } = container.resolve('cache');
 
 export const listUsers = async (debugMode = false) => {
