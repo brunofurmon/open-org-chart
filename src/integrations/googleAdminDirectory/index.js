@@ -43,7 +43,7 @@ const init = ({ logger }) => {
 
     // Create a client
     const client = await auth.getClient();
-    client.subject = process.env.AUTH_CLIENT_SUBJECT;
+    client.subject = process.env.GADMIN_AUTH_CLIENT_SUBJECT;
     authClient = client;
 
     return client;
@@ -57,8 +57,8 @@ const init = ({ logger }) => {
     // Read user data
     try {
       const response = await directory.users.list({
-        customer: process.env.WORKSPACE_CUSTOMER_ID,
-        domain: process.env.WORKSPACE_DOMAIN,
+        customer: process.env.GADMIN_WORKSPACE_CUSTOMER_ID,
+        domain: process.env.GADMIN_WORKSPACE_DOMAIN,
         orderBy: "email",
         maxResults: 100,
         pageToken,
