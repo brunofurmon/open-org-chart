@@ -80,7 +80,8 @@ You can select one of the following integrations to fetch users from:
 ## Google Sheets
 
 - Set `USER_BACKEND_MODE` to `googlesheets`
-- Set the `GSHEETS_SPREADSHEET_ID` to the id of the Google Sheets document
+- Copy this public spreadsheet -> https://docs.google.com/spreadsheets/d/13epIQsN6DqmAktLCSeIzSYpNR5LzVEnvZ2cbo5-KgyY/edit?gid=0#gid=0 and...
+- ...set the `GSHEETS_SPREADSHEET_ID` to the id of the Google Sheets document (part of the URL, as in the example above between `/d/` and `/edit` (may change in the future))
 - Set the `GSHEETS_API_KEY` to the API key to access the Google Sheets API
 
 # Cache Engine
