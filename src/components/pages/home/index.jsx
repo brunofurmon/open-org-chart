@@ -33,6 +33,7 @@ const Home = ({ users }) => {
           .data(users)
           .nodeWidth((_) => 300)
           .nodeHeight((_) => 175)
+          .svgHeight(window.innerHeight - 20)
           .compactMarginBetween((_) => 80)
           .nodeContent((d) =>
             ReactDOMServer.renderToStaticMarkup(<CustomNodeContent {...d} />)
