@@ -1,0 +1,19 @@
+.suggestionContainer {
+  border-width: "1px";
+  border-color: "black";
+  border-style: "solid";
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suggestionItem {
+  margin: 0px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.zebra1 {
+  background-color: #f0f0f0;
+}
+.zebra2 {
+  background-color: #e0e0e0;
+}

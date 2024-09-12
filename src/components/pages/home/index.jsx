@@ -4,13 +4,13 @@ import ReactDOMServer from "react-dom/server";
 import CustomNodeContent from "@/components/orgChart/customNodeContent";
 import { useTranslation } from "@/presentation/i18n/client";
 import UserSearchInput from "@/components/userSearchInput";
+import LanguageSelector from "@/components/languageSelector";
+import styles from "./styles.module.css";
 
 const Home = ({ users }) => {
   const d3Container = useRef(null);
   const [chart, setChart] = useState(null);
   let { i18n } = useTranslation("orgchart");
-
-  const setLanguage = useCallback((lng) => i18n.changeLanguage(lng), [i18n]);
 
   const setCenteredUser = useCallback(
     (userId) => {
@@ -44,18 +44,17 @@ const Home = ({ users }) => {
   }, [users, d3Container, i18n.language]);
 
   return (
-    <>
-      <div style={{ position: "absolute" }}>
+    <div className={styles.mainContainer}>
+      <div className={styles.d3OrgChart} ref={d3Container} />
+
+      <div className={styles.filterContainer}>
         <UserSearchInput users={users} onUserSelected={setCenteredUser} />
       </div>
 
-      <div style={{}} className="org-chart" ref={d3Container} />
-
-      <div style={{ position: "absolute", top: 0, right: 0 }}>
-        <button onClick={() => setLanguage("en")}>EN</button>
-        <button onClick={() => setLanguage("pt")}>PT</button>
+      <div className={styles.languageSelectorContainer}>
+        <LanguageSelector />
       </div>
-    </>
+    </div>
   );
 };
 

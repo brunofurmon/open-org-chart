@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "@/presentation/i18n/client";
+import styles from "./styles.module.css";
 
 const useHover = (styleOnHover, styleOnNotHover = {}) => {
   const [style, setStyle] = useState(styleOnNotHover);
@@ -8,9 +9,17 @@ const useHover = (styleOnHover, styleOnNotHover = {}) => {
   return { style, onMouseEnter, onMouseLeave };
 };
 
-const Hoverable = ({ children }) => {
+const Hoverable = ({ children, index, onClick, user }) => {
   const hover = useHover({ backgroundColor: "lightgray" });
-  return <div {...hover}>{children}</div>;
+  return (
+    <div
+      className={index % 2 === 0 ? styles.zebra1 : styles.zebra2}
+      onClick={(e) => onClick(e, user)}
+      {...hover}
+    >
+      {children}
+    </div>
+  );
 };
 
 const UserSearchInput = ({ users, onUserSelected }) => {
@@ -54,49 +63,48 @@ const UserSearchInput = ({ users, onUserSelected }) => {
   }, [filterUsers, inputValue]);
 
   const onBlur = useCallback(() => {
-    setTimeout(() => {
-      setSuggestedUsers([]);
-    }, 100);
-  }, [setSuggestedUsers]);
+    if (suggestedUsers.length > 0) {
+      setTimeout(() => setSuggestedUsers([]), 400);
+    }
+  }, [suggestedUsers, setSuggestedUsers]);
 
   const onClick = useCallback(
-    (user) => {
-      console.log(user);
+    (e, user) => {
       onUserSelected(user.id);
+      setSuggestedUsers([]);
+      e.currentTarget.blur();
     },
     [onUserSelected]
   );
 
   return (
-    <>
+    <div className={styles.languageSelectorContainer}>
       <input
         type="text"
         placeholder={t("searchUserTemplate")}
         onChange={onChange}
-        onBlur={onBlur}
         onFocus={onFocus}
+        onBlur={onBlur}
         value={inputValue}
       />
-      {users.length > 0 && (
-        <div
-          style={{
-            backgroundColor: "white",
-            borderWidth: "1px",
-            borderColor: "black",
-            borderStyle: "solid",
-          }}
-        >
+      {suggestedUsers.length > 0 && (
+        <div className={styles.suggestionContainer}>
           {suggestedUsers.length > 0 &&
-            suggestedUsers.map((user) => (
-              <Hoverable key={user.id}>
-                <p onClick={() => onClick(user)}>
+            suggestedUsers.map((user, index) => (
+              <Hoverable
+                key={user.id}
+                index={index}
+                onClick={onClick}
+                user={user}
+              >
+                <p className={styles.suggestionItem}>
                   {user.name} - {user.email}
                 </p>
               </Hoverable>
             ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
