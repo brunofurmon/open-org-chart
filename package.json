@@ -1,6 +1,6 @@
 {
   "name": "open-org-chart",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "src/application/index.js",
   "repository": "https://github.com/brunofurmon/open-org-chart",
   "author": "Bruno Furtado",
