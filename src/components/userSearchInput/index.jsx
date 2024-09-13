@@ -73,6 +73,7 @@ const UserSearchInput = ({ users, onUserSelected }) => {
       onUserSelected(user.id);
       setSuggestedUsers([]);
       e.currentTarget.blur();
+      setInputValue("");
     },
     [onUserSelected]
   );
@@ -87,6 +88,11 @@ const UserSearchInput = ({ users, onUserSelected }) => {
         onBlur={onBlur}
         value={inputValue}
       />
+      {inputValue != "" && suggestedUsers.length == 0 && (
+        <div>
+          <p className={styles.suggestionItem}>{t("userNotFound")}</p>
+        </div>
+      )}
       {suggestedUsers.length > 0 && (
         <div className={styles.suggestionContainer}>
           {suggestedUsers.length > 0 &&

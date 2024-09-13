@@ -2,5 +2,6 @@
   "manages": "Manages",
   "supervises": "Supervises",
   "rendering": "Rendering chart...",
-  "searchUserTemplate": "Search name or email"
+  "searchUserTemplate": "Search name or email",
+  "userNotFound": "User not found"
 }
