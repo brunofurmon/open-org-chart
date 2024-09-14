@@ -11,10 +11,11 @@ CONTAINER_NAME=open-org-chart
 welcome:
 	@echo "Welcome to ${CONTAINER_NAME}"
 
-setup: welcome build-docker-image ## Install dependencies
+setup: welcome ## Install dependencies
 ifeq ("$(wildcard ./.env)","")
 	@cp .env.default .env
 endif
+	@make build-docker-image
 
 check-if-docker-image-exists: ## Used to check if docker image exists
 ifeq ($(shell docker images -q ${CONTAINER_NAME} 2> /dev/null | wc -l | bc),0)
