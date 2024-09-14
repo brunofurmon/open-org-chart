@@ -12,20 +12,23 @@ make setup
 
 The application can be configured by setting environment variables. The default values are set on the `.env.default` file, and you should modify the `.env` file to override them.
 
-| Variable                       | Description                                                                                                     | Default Value        |
-| ------------------------------ | --------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `NODE_ENV`                     | The environment the application is running on. Examples: `development`, `production`                            | `development`        |
-| `SERVER_PORT`                  | The port the application will be listening to.                                                                  | `3000`               |
-| `LOG_LEVEL`                    | The log level of the application. Examples: `info`, `debug`, `error`, `warn`                                    | `info`               |
-| `DEBUG`                        | All log lines that match this expression will be thrown in STDOUT (Console).                                    | `*`                  |
-| `ROOT_NODE_ID`                 | The id (email) of the root node                                                                                 | `email@domain.com`   |
-| `GADMIN_WORKSPACE_CUSTOMER_ID` | Your Google Workspace id ([how to get it](https://support.google.com/a/answer/10070793))                        | `A0123b4c5`          |
-| `GADMIN_WORKSPACE_DOMAIN`      | The domain used to filter users from a directory                                                                | `domain.com`         |
-| `GADMIN_AUTH_CLIENT_SUBJECT`   | An account with permissions to list users from the directory                                                    | `admin@domain.com`   |
-| `CACHE_ENGINE`                 | Cache engine of choice. Can be 'memory' or 'redis'                                                              | `memory`             |
-| `REDIS_URL`                    | Id `CACHE_ENGINE` is set to "redis" then the complete URL with protocol, host and port                          | `redis://redis:6379` |
-| `ADMIN_USERS_TTL_CACHE_S`      | Expiration time for users cache entry to be valid (when using memory, cache is perpetual until app termination) | `3600`               |
-| `USER_BACKEND_MODE`            | User backend selection. Can be "csv", "googleadmin" or "googlesheets"                                           | `csv`                |
+| Variable                       | Description                                                                                                     | Default Value                                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `CACHE_ENGINE`                 | Cache engine of choice. Can be 'memory' or 'redis'                                                              | `memory`                                       |
+| `CSV_FILE_PATH`                | Path to the CSV file containing the users data. Only used when `USER_BACKEND_MODE` is set to `csv`              | `./csv_sample.csv`                             |
+| `DEBUG`                        | All log lines that match this expression will be thrown in STDOUT (Console).                                    | `*`                                            |
+| `GADMIN_AUTH_CLIENT_SUBJECT`   | An account with permissions to list users from the directory                                                    | `admin@domain.com`                             |
+| `GADMIN_WORKSPACE_CUSTOMER_ID` | Your Google Workspace id ([how to get it](https://support.google.com/a/answer/10070793))                        | `A0123b4c5`                                    |
+| `GADMIN_WORKSPACE_DOMAIN`      | The domain used to filter users from a directory                                                                | `domain.com`                                   |
+| `GSHEETS_API_KEY`              | API key to access the Google Sheets API                                                                         | `no default`                                   |
+| `GSHEETS_SPREADSHEET_ID`       | Id of the Google Sheets document                                                                                | `13epIQsN6DqmAktLCSeIzSYpNR5LzVEnvZ2cbo5-KgyY` |
+| `LOG_LEVEL`                    | The log level of the application. Examples: `info`, `debug`, `error`, `warn`                                    | `info`                                         |
+| `NODE_ENV`                     | The environment the application is running on. Examples: `development`, `production`                            | `development`                                  |
+| `REDIS_URL`                    | Id `CACHE_ENGINE` is set to "redis" then the complete URL with protocol, host and port                          | `redis://redis:6379`                           |
+| `ROOT_NODE_ID`                 | The id (email) of the root node                                                                                 | `email@domain.com`                             |
+| `SERVER_PORT`                  | The port the application will be listening to.                                                                  | `3000`                                         |
+| `TTL_CACHE_S`                  | Expiration time for users cache entry to be valid (when using memory, cache is perpetual until app termination) | `3600`                                         |
+| `USER_BACKEND_MODE`            | User backend selection. Can be "csv", "googleadmin" or "googlesheets"                                           | `csv`                                          |
 
 ## Running
 
