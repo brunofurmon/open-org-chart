@@ -5,7 +5,7 @@ let client = null;
 let clientConfig = {
   url: process.env.REDIS_URL,
   socket: {
-    connectTimeout: process.env.REDIS_CONN_TIMEOUT_MS
+    connectTimeout: Number(process.env.REDIS_CONN_TIMEOUT_MS)
   }
 }
 
