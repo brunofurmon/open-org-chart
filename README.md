@@ -27,7 +27,7 @@ The application can be configured by setting environment variables. The default 
 | `REDIS_URL`                    | Id `CACHE_ENGINE` is set to "redis" then the complete URL with protocol, host and port                          | `redis://redis:6379`                           |
 | `ROOT_NODE_ID`                 | The id (email) of the root node                                                                                 | `email@domain.com`                             |
 | `SERVER_PORT`                  | The port the application will be listening to.                                                                  | `3000`                                         |
-| `TTL_CACHE_S`                  | Expiration time for users cache entry to be valid (when using memory, cache is perpetual until app termination) | `3600`                                         |
+| `CACHE_TTL_S`                  | Expiration time for users cache entry to be valid (when using memory, cache is perpetual until app termination) | `3600`                                         |
 | `USER_BACKEND_MODE`            | User backend selection. Can be "csv", "googleadmin" or "googlesheets"                                           | `csv`                                          |
 
 ## Running
@@ -94,12 +94,13 @@ You can select one of the following cache engines to store users data:
 ## Memory
 
 - Set `CACHE_ENGINE` to `memory`
-- Set the `ADMIN_USERS_TTL_CACHE_S` to the expiration time for users cache entry to be valid (in seconds)
+- Set the `CACHE_TTL_S` to the expiration time for users cache entry to be valid (in seconds)
 
 ## Redis
 
 - Set `CACHE_ENGINE` to `redis`
 - Set the `REDIS_URL` to the complete URL with protocol, host and port
+- Set the `CACHE_TTL_S` to the expiration time for users cache entry to be valid (in seconds)
 
 ## API reference
 
