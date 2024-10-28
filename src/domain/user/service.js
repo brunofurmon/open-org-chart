@@ -23,7 +23,7 @@ export const listUsers = async (debugMode = false) => {
   let users = await cachedResult(
     usersStore.listUsers,
     'listUsers',
-    process.env.CACHE_TTL
+    process.env.CACHE_TTL_S
   );
 
   // Creates an extra node behind the root to aggregate parentless nodes, removing them from the top level
