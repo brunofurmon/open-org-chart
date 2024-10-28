@@ -11,6 +11,9 @@ const getClient = async () => {
   try {
     client = await createClient({
       url: process.env.REDIS_URL,
+      socket: {
+        connectTimeout: process.env.REDIS_CONN_TIMEOUT_MS
+      }
     });
 
     await client.connect();
