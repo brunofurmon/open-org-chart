@@ -2,6 +2,12 @@ const { createClient } = require("redis");
 const { inspect } = require("util");
 
 let client = null;
+let clientConfig = {
+  url: process.env.REDIS_URL,
+  socket: {
+    connectTimeout: Number(process.env.REDIS_CONN_TIMEOUT_MS) || 5000
+  }
+}
 
 const getClient = async () => {
   if (client !== null) {
@@ -9,9 +15,7 @@ const getClient = async () => {
   }
 
   try {
-    client = await createClient({
-      url: process.env.REDIS_URL,
-    });
+    client = await createClient(clientConfig);
 
     await client.connect();
   } catch (error) {
@@ -35,9 +39,7 @@ const set = async (key, value, ttl) => {
 
 const isReady = async () => {
   try {
-    const newClient = await createClient({
-      url: process.env.REDIS_URL,
-    });
+    const newClient = await createClient(clientConfig);
 
     await newClient.connect();
     await newClient.disconnect();
