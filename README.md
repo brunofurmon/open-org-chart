@@ -2,6 +2,16 @@
 
 An open-source Org Chart made with [NextJS](https://nextjs.org/) and [d3-org-chart](https://www.npmjs.com/package/d3-org-chart)
 
+
+https://github.com/user-attachments/assets/6e30ff9b-b908-4134-89b5-d9b2494ab65f
+
+# Features:
+- Dragable interface
+- User search
+- English/Portuguese
+- Use it with CSV, Google Sheets or Google Admin API (Google Workspace Admin)
+
+
 ## Installation
 
 ```sh
