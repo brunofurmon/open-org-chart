@@ -35,7 +35,14 @@ const CustomNodeContent = (props) => {
           }}
         />
 
-        <div style={{ marginRight: "10px", marginTop: "15px", float: "right" }}>
+        <div
+          style={{
+            marginRight: "10px",
+            marginTop: "15px",
+            float: "right",
+            maxWidth: props.width / 4,
+          }}
+        >
           {props.data.area}
         </div>
 
