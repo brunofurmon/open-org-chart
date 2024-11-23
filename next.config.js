@@ -9,7 +9,6 @@ const nextConfig = {
   reactStrictMode: true,
   generateBuildId: () => Promise.resolve(version),
   distDir: 'build/_next',
-  optimizeFonts: false,
   images: {
     remotePatterns: [
       {
