@@ -6,6 +6,7 @@ import { useTranslation } from "@/presentation/i18n/client";
 import UserSearchInput from "@/components/userSearchInput";
 import LanguageSelector from "@/components/languageSelector";
 import styles from "./styles.module.css";
+import { OrgChart } from "d3-org-chart";
 
 const Home = ({ users }) => {
   const d3Container = useRef(null);
@@ -20,29 +21,28 @@ const Home = ({ users }) => {
     [chart, setChart]
   );
 
+  const renderNodeContent = useCallback((nodeData) => {
+    return ReactDOMServer.renderToString(<CustomNodeContent {...nodeData} />);
+  }, []);
+
   // Effect for initial render
   useEffect(() => {
-    // https://github.com/bumbeishvili/org-chart/issues/83#issuecomment-963481842
-    import("d3-org-chart").then((mod) => {
-      /** @type OrgChart */
-      const chart = new mod.OrgChart();
-      chart.layout("top");
-      if (users && d3Container.current) {
-        chart
-          .container(d3Container.current)
-          .data(users)
-          .nodeWidth((_) => 300)
-          .nodeHeight((_) => 175)
-          .svgHeight(window.innerHeight - 20)
-          .compactMarginBetween((_) => 80)
-          .nodeContent((d) =>
-            ReactDOMServer.renderToStaticMarkup(<CustomNodeContent {...d} />)
-          )
-          .render();
-      }
-      setChart(chart);
-    });
-  }, [users, d3Container, i18n.language]);
+    const chart = new OrgChart();
+    chart.layout("top");
+
+    if (users && d3Container.current) {
+      chart
+        .container(d3Container.current)
+        .data(users)
+        .nodeWidth((_) => 300)
+        .nodeHeight((_) => 175)
+        .svgHeight(window.innerHeight - 20)
+        .compactMarginBetween((_) => 80)
+        .nodeContent(renderNodeContent)
+        .render();
+    }
+    setChart(chart);
+  }, [users, d3Container, i18n.language, renderNodeContent]);
 
   return (
     <div className={styles.mainContainer}>
