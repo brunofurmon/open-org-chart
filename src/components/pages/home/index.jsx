@@ -14,11 +14,8 @@ const Home = ({ users }) => {
   let { i18n } = useTranslation("orgchart");
 
   const setCenteredUser = useCallback(
-    (userId) => {
-      chart.setCentered(userId).render();
-      setChart(chart);
-    },
-    [chart, setChart]
+    (userId) => chart.setCentered(userId).render(),
+    [chart]
   );
 
   const renderNodeContent = useCallback((nodeData) => {
@@ -37,6 +34,7 @@ const Home = ({ users }) => {
         .nodeWidth((_) => 300)
         .nodeHeight((_) => 175)
         .svgHeight(window.innerHeight - 20)
+        .onNodeClick((node) => chart.setCentered(node.id).render())
         .compactMarginBetween((_) => 80)
         .nodeContent(renderNodeContent)
         .render();
