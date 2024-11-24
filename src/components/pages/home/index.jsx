@@ -16,9 +16,8 @@ const Home = ({ users }) => {
   const setCenteredUser = useCallback(
     (userId) => {
       chart.setCentered(userId).render();
-      setChart(chart);
     },
-    [chart, setChart]
+    [chart]
   );
 
   const renderNodeContent = useCallback((nodeData) => {
@@ -37,6 +36,7 @@ const Home = ({ users }) => {
         .nodeWidth((_) => 300)
         .nodeHeight((_) => 175)
         .svgHeight(window.innerHeight - 20)
+        .onNodeClick((nodeId) => chart.setCentered(nodeId).render())
         .compactMarginBetween((_) => 80)
         .nodeContent(renderNodeContent)
         .render();
