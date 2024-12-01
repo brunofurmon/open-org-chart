@@ -19,12 +19,67 @@ const usersStore = backendModeResolver[userBackendMode]();
 
 const { cachedResult } = container.resolve('cache');
 
+const groupUsersByTeam = async (users, debugMode) => {
+  // creates a new root user called "Org"
+  const orgNode = {
+    name: "Org",
+    id: 'root',
+    email: '-',
+    managedByEmail: "",
+    parentId: "",
+    photoUrl: "https://placecats.com/g/200/200",
+    title: "",
+    area: "",
+    team: "",
+  };
+
+  // read all users and map each existing team, creates a note for each 
+  // and assign their parent to the root node
+  const existingTeams = users.map((user) => user.team.trim().toLowerCase());
+  const teamNodes = [...new Set(existingTeams)].map((team) => ({
+    name: team,
+    id: team,
+    email: team,
+    managedByEmail: 'root',
+    parentId: 'root',
+    photoUrl: "https://placecats.com/g/200/200",
+    title: "",
+    area: "",
+    team: "",
+  }));
+
+  // reads users and assign all of them to their respective team
+  for (let i = 0; i < users.length; i++) {
+    const user = users[i];
+    user.id = user.email.trim().toLowerCase();
+    user.parentId = user.team.trim().toLowerCase();
+
+    // if a users does not have a team, then
+    //   if debugMode is true, then add it to the fixme node
+    //   if debugMode is false, then remove it from the view
+    if (!user.team.trim().toLowerCase()) {
+      if (debugMode) {
+        user.parentId = process.env.ROOT_NODE_ID;
+      } else {
+        // remove from the list
+        users.splice(i, 1);
+      }
+    }
+  }
+
+  return [orgNode, ...teamNodes, ...users];
+}
+
 export const listUsers = async (debugMode = false, teamView = false) => {
   let users = await cachedResult(
     usersStore.listUsers,
     'listUsers',
     process.env.CACHE_TTL_S
   );
+
+  if (teamView) {
+    return groupUsersByTeam(users, debugMode);
+  }
 
   // Creates an extra node behind the root to aggregate parentless nodes, removing them from the top level
   const fixmeIntermediateNode = {

@@ -33,7 +33,8 @@ const UserSearchInput = ({ users, onUserSelected }) => {
         .filter(
           (user) =>
             user.name.toLowerCase().includes(input.toLowerCase()) ||
-            user.email.toLowerCase().includes(input.toLowerCase())
+            user.email.toLowerCase().includes(input.toLowerCase()) ||
+            user.team.toLowerCase().includes(input.toLowerCase())
         )
         .slice(0, 5);
       setSuggestedUsers(filteredUsers);
