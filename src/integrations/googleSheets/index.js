@@ -11,6 +11,7 @@ const processRows = (rows) => {
   const managedByEmailIndex = columns.indexOf("Managed by Email");
   const titleIndex = columns.indexOf("Title");
   const areaIndex = columns.indexOf("Area");
+  const teamIndex = columns.indexOf("Team");
 
   const users = rows.slice(1).map((row) => ({
     name: row[nameIndex],
@@ -18,7 +19,8 @@ const processRows = (rows) => {
     photoUrl: row[photoUrlIndex],
     managedByEmail: row[managedByEmailIndex],
     title: row[titleIndex],
-    area: row[areaIndex]
+    area: row[areaIndex],
+    team: row[team]
   }));
 
   return users;

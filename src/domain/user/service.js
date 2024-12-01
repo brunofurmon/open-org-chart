@@ -19,7 +19,7 @@ const usersStore = backendModeResolver[userBackendMode]();
 
 const { cachedResult } = container.resolve('cache');
 
-export const listUsers = async (debugMode = false) => {
+export const listUsers = async (debugMode = false, teamView = false) => {
   let users = await cachedResult(
     usersStore.listUsers,
     'listUsers',
@@ -36,6 +36,7 @@ export const listUsers = async (debugMode = false) => {
     photoUrl: "https://placecats.com/g/200/200",
     title: "",
     area: "",
+    team: "",
   };
   users.push(fixmeIntermediateNode);
 
@@ -67,6 +68,7 @@ export const listUsers = async (debugMode = false) => {
     user.id = user.email.trim().toLowerCase();
     user.parentId = user.managedByEmail.trim().toLowerCase();
   }
+
   if (!debugMode) {
     users = users.filter(
       (user) =>
@@ -74,5 +76,7 @@ export const listUsers = async (debugMode = false) => {
         user.id !== fixmeIntermediateNode.id
     );
   }
+
+  console.log({ debugMode, teamView });
   return users;
 };
