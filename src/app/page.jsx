@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
 import Home from "@/components/pages/home";
 
-const Page = ({ searchParams }) => {
-  const { debug } = searchParams;
+const Page = async ({ searchParams }) => {
+  const { debug } = await searchParams;
 
   return (
     <Suspense>
