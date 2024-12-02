@@ -15,17 +15,15 @@ const Home = ({ debugMode }) => {
   const [chart, setChart] = useState(null);
   let { i18n } = useTranslation("orgchart");
   const [teamView, setTeamView] = useState(false);
+  const { setUsers } = useUsersContext();
 
   const setCenteredUser = useCallback(
     (userId) => chart.setCentered(userId).render(),
     [chart]
   );
 
-  const { users, setUsers } = useUsersContext();
-
   const fetchUsers = useCallback(
     async (debugMode = false, teamView = false) => {
-      // fetch from /api/users
       const response = await fetch(
         `/api/users?debug=${debugMode}&teamView=${teamView}`
       );
@@ -41,28 +39,25 @@ const Home = ({ debugMode }) => {
     return ReactDOMServer.renderToString(<CustomNodeContent {...nodeData} />);
   }, []);
 
-  // Effect for initial render
   useEffect(() => {
     fetchUsers(debugMode, teamView).then((users) => {
-      const chart = new OrgChart();
-      chart.layout("top");
-
-      // debug
-      console.log(users);
+      const newChart = new OrgChart();
 
       if (users && d3Container.current) {
-        chart
+        newChart
           .container(d3Container.current)
+          .layout("top")
           .data(users)
           .nodeWidth((_) => 300)
           .nodeHeight((_) => 175)
           .svgHeight(window.innerHeight - 20)
-          .onNodeClick((node) => chart.setCentered(node.id).render())
+          .onNodeClick((node) => newChart.setCentered(node.id).render())
           .compactMarginBetween((_) => 80)
           .nodeContent(renderNodeContent)
-          .render();
+          .render()
+          .fit();
       }
-      setChart(chart);
+      setChart(newChart);
     });
   }, [
     d3Container,
@@ -77,7 +72,7 @@ const Home = ({ debugMode }) => {
     <div className={styles.mainContainer}>
       <div className={styles.controlHeaderContainer}>
         <div className={styles.filterContainer}>
-          <UserSearchInput users={users} onUserSelected={setCenteredUser} />
+          <UserSearchInput onUserSelected={setCenteredUser} />
         </div>
 
         <div className={styles.teamViewSelectorContainer}>
