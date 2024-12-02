@@ -1,6 +1,10 @@
 import { useCallback } from "react";
 
+import { useTranslation } from "@/presentation/i18n/client";
+
 const TeamViewerSelector = ({ setTeamView, teamView }) => {
+  const { t } = useTranslation("teamViewerSelector");
+
   const setTeamViewCallback = useCallback(
     () => setTeamView(!teamView),
     [setTeamView, teamView]
@@ -15,7 +19,7 @@ const TeamViewerSelector = ({ setTeamView, teamView }) => {
         checked={teamView}
         onChange={setTeamViewCallback}
       />
-      <label htmlFor="teamView">Team View</label>
+      <label htmlFor="teamView">{t("teamView")}</label>
     </div>
   );
 };
