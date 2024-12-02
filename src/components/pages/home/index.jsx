@@ -40,24 +40,27 @@ const Home = ({ debugMode }) => {
   }, []);
 
   useEffect(() => {
-    fetchUsers(debugMode, teamView).then((users) => {
-      const newChart = new OrgChart();
+    // initial chart set
+    setChart(new OrgChart());
+  }, []);
 
-      if (users && d3Container.current) {
-        newChart
-          .container(d3Container.current)
-          .layout("top")
-          .data(users)
-          .nodeWidth((_) => 300)
-          .nodeHeight((_) => 175)
-          .svgHeight(window.innerHeight - 20)
-          .onNodeClick((node) => newChart.setCentered(node.id).render())
-          .compactMarginBetween((_) => 80)
-          .nodeContent(renderNodeContent)
-          .render()
-          .fit();
-      }
-      setChart(newChart);
+  useEffect(() => {
+    // chart config
+    if (!chart) return;
+
+    fetchUsers(debugMode, teamView).then((users) => {
+      chart
+        .container(d3Container.current)
+        .layout("top")
+        .data(users)
+        .nodeWidth((_) => 300)
+        .nodeHeight((_) => 175)
+        .svgHeight(window.innerHeight - 20)
+        .onNodeClick((node) => chart.setCentered(node.id).render())
+        .compactMarginBetween((_) => 80)
+        .nodeContent(renderNodeContent)
+        .render()
+        .fit();
     });
   }, [
     d3Container,
@@ -66,6 +69,7 @@ const Home = ({ debugMode }) => {
     debugMode,
     teamView,
     fetchUsers,
+    chart,
   ]);
 
   return (
