@@ -2,7 +2,7 @@ import fs from "fs";
 import csv from "csv-parser";
 
 // Returns a User model from a CSV file
-// returns { name, email, photoUrl, managedByEmail, title, area }
+// returns { name, email, photoUrl, managedByEmail, title, area, team }
 const toDomainModel = (user) => {
   const name = user["Full Name"];
   const email = user["Email"];
@@ -10,8 +10,9 @@ const toDomainModel = (user) => {
   const managedByEmail = user["Managed By Email"];
   const title = user["Title"];
   const area = user["Area"];
+  const team = user["Team"];
 
-  return { name, email, photoUrl, managedByEmail, title, area };
+  return { name, email, photoUrl, managedByEmail, title, area, team };
 };
 
 // Module must implement

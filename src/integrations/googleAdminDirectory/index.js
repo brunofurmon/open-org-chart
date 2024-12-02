@@ -1,7 +1,7 @@
 import { google } from "googleapis";
 
 // Returns a User model from Google Admin Directory API
-// returns { name, email, photoUrl, managedByEmail, title, area }
+// returns { name, email, photoUrl, managedByEmail, title, area, team }
 const toDomainModel = (user) => {
   const name = user.name.fullName;
   const email = user.primaryEmail;
@@ -16,7 +16,7 @@ const toDomainModel = (user) => {
     (organization) => organization.primary
   )?.department;
 
-  return { name, email, photoUrl, managedByEmail, title, area };
+  return { name, email, photoUrl, managedByEmail, title, area, team };
 };
 
 // Module must implement

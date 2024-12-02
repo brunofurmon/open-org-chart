@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "@/presentation/i18n/client";
+import { useUsersContext } from "@/providers/usersProvider";
 import styles from "./styles.module.css";
 
 const useHover = (styleOnHover, styleOnNotHover = {}) => {
@@ -22,10 +23,11 @@ const Hoverable = ({ children, index, onClick, user }) => {
   );
 };
 
-const UserSearchInput = ({ users, onUserSelected }) => {
+const UserSearchInput = ({ onUserSelected }) => {
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const { t } = useTranslation("orgchart");
   const [inputValue, setInputValue] = useState("");
+  const { users } = useUsersContext();
 
   const filterUsers = useCallback(
     (input) => {
@@ -33,7 +35,8 @@ const UserSearchInput = ({ users, onUserSelected }) => {
         .filter(
           (user) =>
             user.name.toLowerCase().includes(input.toLowerCase()) ||
-            user.email.toLowerCase().includes(input.toLowerCase())
+            user.email.toLowerCase().includes(input.toLowerCase()) ||
+            user.team.toLowerCase().includes(input.toLowerCase())
         )
         .slice(0, 5);
       setSuggestedUsers(filteredUsers);
@@ -64,7 +67,10 @@ const UserSearchInput = ({ users, onUserSelected }) => {
 
   const onBlur = useCallback(() => {
     if (suggestedUsers.length > 0) {
-      setTimeout(() => setSuggestedUsers([]), 400);
+      setTimeout(() => {
+        setInputValue("");
+        setSuggestedUsers([]);
+      }, 400);
     }
   }, [suggestedUsers, setSuggestedUsers]);
 
@@ -93,6 +99,7 @@ const UserSearchInput = ({ users, onUserSelected }) => {
           <p className={styles.suggestionItem}>{t("userNotFound")}</p>
         </div>
       )}
+
       {suggestedUsers.length > 0 && (
         <div className={styles.suggestionContainer}>
           {suggestedUsers.length > 0 &&
@@ -104,7 +111,9 @@ const UserSearchInput = ({ users, onUserSelected }) => {
                 user={user}
               >
                 <p className={styles.suggestionItem}>
-                  {user.name} - {user.email}
+                  {`${
+                    user.name.charAt(0).toUpperCase() + user.name.slice(1)
+                  } - ${user.email}`}
                 </p>
               </Hoverable>
             ))}

@@ -43,7 +43,10 @@ const CustomNodeContent = (props) => {
             maxWidth: props.width / 4,
           }}
         >
-          {props.data.area}
+          <div>
+            <p>{props.data.area}</p>
+            <p>{props.data.team}</p>
+          </div>
         </div>
 
         <div
