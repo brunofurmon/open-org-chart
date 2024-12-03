@@ -43,10 +43,7 @@ const CustomNodeContent = (props) => {
             maxWidth: props.width / 4,
           }}
         >
-          <div>
-            <p>{props.data.area}</p>
-            <p>{props.data.team}</p>
-          </div>
+          <div>{props.data.area}</div>
         </div>
 
         <div
@@ -65,8 +62,8 @@ const CustomNodeContent = (props) => {
           <div
             style={{ color: "#111672", fontSize: "16px", fontWeight: "bold" }}
           >
-            {" "}
-            {props.data.name + " <" + props.data.email + ">"}{" "}
+            <p style={{ margin: "0" }}>{props.data.name}</p>
+            <p style={{ margin: "0" }}>{props.data.email}</p>
           </div>
           <div
             style={{
@@ -77,7 +74,7 @@ const CustomNodeContent = (props) => {
             }}
           >
             {" "}
-            {props.data.title}{" "}
+            {props.data.title} - {props.data.team}
           </div>
         </div>
         <div

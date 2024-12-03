@@ -53,7 +53,7 @@ const Home = ({ debugMode }) => {
         .container(d3Container.current)
         .layout("top")
         .data(users)
-        .nodeWidth((_) => 300)
+        .nodeWidth((_) => 400)
         .nodeHeight((_) => 175)
         .svgHeight(window.innerHeight - 20)
         .onNodeClick((node) => chart.setCentered(node.id).render())
