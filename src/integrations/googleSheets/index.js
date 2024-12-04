@@ -20,7 +20,7 @@ const processRows = (rows) => {
     managedByEmail: row[managedByEmailIndex],
     title: row[titleIndex],
     area: row[areaIndex],
-    team: row[team]
+    team: row[teamIndex]
   }));
 
   return users;

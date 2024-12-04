@@ -10,7 +10,7 @@ import { useUsersContext } from "@/providers/usersProvider";
 import styles from "./styles.module.css";
 import { OrgChart } from "d3-org-chart";
 
-const Home = ({ debugMode }) => {
+const Home = ({ debugMode, teamViewEnabled }) => {
   const d3Container = useRef(null);
   const [chart, setChart] = useState(null);
   let { i18n } = useTranslation("orgchart");
@@ -85,12 +85,14 @@ const Home = ({ debugMode }) => {
           <UserSearchInput onUserSelected={setCenteredUser} />
         </div>
 
-        <div className={styles.teamViewSelectorContainer}>
-          <TeamViewerSelector
-            teamView={teamView}
-            toggleTeamView={toggleTeamView}
-          />
-        </div>
+        {teamViewEnabled && (
+          <div className={styles.teamViewSelectorContainer}>
+            <TeamViewerSelector
+              teamView={teamView}
+              toggleTeamView={toggleTeamView}
+            />
+          </div>
+        )}
 
         <div className={styles.languageSelectorContainer}>
           <LanguageSelector />

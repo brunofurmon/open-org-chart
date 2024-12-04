@@ -19,7 +19,6 @@ const usersStore = backendModeResolver[userBackendMode]();
 
 const { cachedResult } = container.resolve('cache');
 
-
 // Creates an extra node related to root that aggregate parentless nodes, removing them from the top level
 const FIXME_NODE_ID = 'fixme@fixme.com';
 const getFixMeNode = (teamView) => ({
@@ -57,7 +56,7 @@ const groupUsersByTeam = async (users, debugMode) => {
   // read all users and map each existing team, creates a note for each 
   // and assign their parent to the root node
   const existingTeams = users
-    .map((user) => user.team.trim().toLowerCase())
+    .map((user) => user.team?.trim().toLowerCase())
     .filter(teamName => teamName && teamName !== '');
 
   const teamNodes = [...new Set(existingTeams)].map((team) => ({
@@ -83,12 +82,12 @@ const groupUsersByTeam = async (users, debugMode) => {
       continue
     }
 
-    user.parentId = user.team.trim().toLowerCase();
+    user.parentId = user.team ? user.team.trim().toLowerCase() : FIXME_NODE_ID;
 
     // if a users does not have a team, then
     //   if debugMode is true, then add it to the fixme node
     //   if debugMode is false, then remove it from the view
-    if (!user.team.trim().toLowerCase()) {
+    if (!user.team?.trim().toLowerCase()) {
       if (debugMode) {
         user.parentId = FIXME_NODE_ID;
       } else {
