@@ -1,14 +1,17 @@
 import React, { Suspense } from "react";
 import Home from "@/components/pages/home";
-import { listUsers } from "@/domain/user/service";
+
+const { USER_BACKEND_MODE } = process.env;
 
 const Page = async ({ searchParams }) => {
   const { debug } = await searchParams;
-  const users = await listUsers(debug === "true");
 
   return (
     <Suspense>
-      <Home users={users} />
+      <Home
+        debugMode={debug}
+        teamViewEnabled={USER_BACKEND_MODE !== "googleadmin"}
+      />
     </Suspense>
   );
 };

@@ -1,5 +1,6 @@
 {
   "manages": "Manages",
+  "members": "Members",
   "supervises": "Supervises",
   "rendering": "Rendering chart...",
   "searchUserTemplate": "Search name or email",

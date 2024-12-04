@@ -1,4 +1,5 @@
 {
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -9,6 +10,7 @@
       "@/integrations/*": ["src/integrations/*"],
       "@/presentation/*": ["src/presentation/*"],
       "@/providers/*": ["src/providers/*"],
+      "@/public/*": ["public/*"],
       "@/src/*": ["src/*"]
     }
   }
