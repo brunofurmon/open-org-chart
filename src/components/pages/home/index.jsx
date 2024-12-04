@@ -14,8 +14,12 @@ const Home = ({ debugMode }) => {
   const d3Container = useRef(null);
   const [chart, setChart] = useState(null);
   let { i18n } = useTranslation("orgchart");
-  const [teamView, setTeamView] = useState(false);
   const { setUsers } = useUsersContext();
+  const [teamView, setTeamView] = useState(false);
+
+  const toggleTeamView = useCallback(() => {
+    setTeamView(!teamView);
+  }, [teamView, setTeamView]);
 
   const setCenteredUser = useCallback(
     (userId) => chart.setCentered(userId).render(),
@@ -35,8 +39,10 @@ const Home = ({ debugMode }) => {
     [setUsers]
   );
 
-  const renderNodeContent = useCallback((nodeData) => {
-    return ReactDOMServer.renderToString(<CustomNodeContent {...nodeData} />);
+  const renderNodeContent = useCallback((nodeData, teamView) => {
+    return ReactDOMServer.renderToString(
+      <CustomNodeContent teamView={teamView} {...nodeData} />
+    );
   }, []);
 
   useEffect(() => {
@@ -58,7 +64,7 @@ const Home = ({ debugMode }) => {
         .svgHeight(window.innerHeight - 20)
         .onNodeClick((node) => chart.setCentered(node.id).render())
         .compactMarginBetween((_) => 80)
-        .nodeContent(renderNodeContent)
+        .nodeContent((nodeData) => renderNodeContent(nodeData, teamView))
         .render()
         .fit();
     });
@@ -80,7 +86,10 @@ const Home = ({ debugMode }) => {
         </div>
 
         <div className={styles.teamViewSelectorContainer}>
-          <TeamViewerSelector teamView={teamView} setTeamView={setTeamView} />
+          <TeamViewerSelector
+            teamView={teamView}
+            toggleTeamView={toggleTeamView}
+          />
         </div>
 
         <div className={styles.languageSelectorContainer}>

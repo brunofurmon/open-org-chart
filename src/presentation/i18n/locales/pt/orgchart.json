@@ -1,5 +1,6 @@
 {
   "manages": "Gerencia",
+  "members": "Membros",
   "supervises": "Supervisiona",
   "rendering": "Rendering chart...",
   "searchUserTemplate": "Buscar nome ou email",

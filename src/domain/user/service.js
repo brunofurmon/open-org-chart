@@ -32,6 +32,9 @@ const getFixMeNode = (teamView) => ({
   title: "",
   area: "",
   team: "",
+  // control fields
+  _isFixmeNode: true,
+  _isTeamNode: teamView,
 });
 
 const groupUsersByTeam = async (users, debugMode) => {
@@ -46,6 +49,9 @@ const groupUsersByTeam = async (users, debugMode) => {
     title: "",
     area: "",
     team: "",
+    // control fields
+    _isRootNode: true,
+    _isTeamNode: true
   };
 
   // read all users and map each existing team, creates a note for each 
@@ -63,7 +69,9 @@ const groupUsersByTeam = async (users, debugMode) => {
     team: '',
     photoUrl: "https://placecats.com/g/200/200",
     title: "",
-    area: ""
+    area: "",
+    // control fields
+    _isTeamNode: true,
   }));
 
   // reads users and assign all of them to their respective team
@@ -124,6 +132,8 @@ export const listUsers = async (debugMode = false, teamView = false) => {
     if (user.email.trim().toLowerCase() === process.env.ROOT_NODE_ID) {
       user.id = user.email.trim().toLowerCase();
       user.parentId = "";
+      user._isRootNode = true;
+
       continue;
     }
     if (user.id === FIXME_NODE_ID) {
